@@ -1,0 +1,25 @@
+{
+  "name": "download-gc-audio",
+  "version": "1.0.0",
+  "description": "Download General Conference Talk Audio",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spig/gc-audio.git"
+  },
+  "keywords": [
+    "general",
+    "conference",
+    "lds",
+    "mp3"
+  ],
+  "author": "Steve Spigarelli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spig/gc-audio/issues"
+  },
+  "homepage": "https://github.com/spig/gc-audio#readme"
+}
