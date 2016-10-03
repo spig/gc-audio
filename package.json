@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/spig/gc-audio/issues"
   },
-  "homepage": "https://github.com/spig/gc-audio#readme"
+  "homepage": "https://github.com/spig/gc-audio#readme",
+  "dependencies": {
+    "request": "^2.75.0"
+  }
 }
