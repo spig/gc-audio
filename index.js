@@ -8,8 +8,23 @@ var talkUrls = [];
 
 var rootUrl = 'https://www.lds.org';
 
+var defaultGCUri = rootUrl + '/general-conference?lang=eng&json';
+
+var gcUri = (function(urlParam) {
+    if (urlParam.match('^http')) {
+        if (urlParam.match('&json')) {
+            return urlParam;
+        } else {
+            // the lang parameter should already be in the url so '&' will be ok
+            return urlParam + '&json';
+        }
+    } else {
+        return defaultGCUri;
+    }
+})(process.argv[2]);
+
 request({
-        uri: rootUrl + '/general-conference/2016/10?lang=eng&json',
+        uri: gcUri,
         json: true,
         timeout: 5000
     },
