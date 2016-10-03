@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/spig/gc-audio#readme",
   "dependencies": {
+    "async": "^2.0.1",
     "request": "^2.75.0"
   }
 }
