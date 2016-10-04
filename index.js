@@ -11,7 +11,7 @@ var rootUrl = 'https://www.lds.org';
 var defaultGCUri = rootUrl + '/general-conference?lang=eng&json';
 
 var gcUri = (function(urlParam) {
-    if (urlParam.match('^http')) {
+    if (urlParam && urlParam.match('^http')) {
         if (urlParam.match('&json')) {
             return urlParam;
         } else {
