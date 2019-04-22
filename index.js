@@ -31,9 +31,17 @@ request({
     function(err, response, jsonBody) {
         if (!err && response.statusCode === 200) {
             try {
-                var sessions = jsonBody.subComponents.sessions;
+                var sessions = jsonBody.subComponents.sessions || [];
                 sessions.forEach(function(session) {
                     var talks = session.subComponents.tile;
+                    talks.forEach(function(talk) {
+                        talkUrls.push(talk.link);
+                    });
+                });
+
+                var speakers = jsonBody.subComponents.speakers || [];
+                speakers.forEach(function(speaker) {
+                    var talks = speaker.subComponents.tile;
                     talks.forEach(function(talk) {
                         talkUrls.push(talk.link);
                     });
