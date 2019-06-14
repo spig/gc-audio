@@ -24,6 +24,7 @@
   "homepage": "https://github.com/spig/gc-audio#readme",
   "dependencies": {
     "async": "^2.0.1",
+    "cheerio": "^1.0.0-rc.3",
     "request": "^2.75.0"
   }
 }

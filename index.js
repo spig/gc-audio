@@ -3,10 +3,11 @@
 var request = require('request');
 var async = require('async');
 var fs = require('fs');
+const cheerio = require('cheerio');
 
 var talkUrls = [];
 
-var rootUrl = 'https://www.lds.org';
+var rootUrl = 'https://www.churchofjesuschrist.org';
 
 var defaultGCUri = rootUrl + '/general-conference?lang=eng&json';
 
@@ -34,6 +35,7 @@ request({
                 var sessions = jsonBody.subComponents.sessions || [];
                 sessions.forEach(function(session) {
                     var talks = session.subComponents.tile;
+
                     talks.forEach(function(talk) {
                         talkUrls.push(talk.link);
                     });
@@ -51,13 +53,21 @@ request({
                     talkUrls.map(function(url) {
                         return function(callback) {
                             request({
-                                uri: rootUrl + url + '&json',
+                                uri: rootUrl + url,
                                 json: true,
-                                timeout: 5000
+                                timeout: 30000
                             },
-                            function(err, response, jsonBody) {
+                            function(err, response, body) {
                                 if (!err && response.statusCode === 200) {
-                                    return callback(null, jsonBody.subComponents.audioPlayer.audioUrl);
+                                    const $ = cheerio.load(body);
+                                    let mp3URL = null
+                                    $('a').filter(function(i, elem) {
+                                        let href = $(this).attr('href');
+                                        if (typeof href !== 'undefined' && href.match(/\.mp3/)) {
+                                            mp3URL = href;
+                                        }
+                                    });
+                                    return callback(null, mp3URL);
                                 }
 
                                 callback(err);
@@ -72,7 +82,7 @@ request({
 
                         results.forEach(function(audioUrl) {
                             var urlParts = audioUrl.split('/');
-                            var audioFilename = urlParts[urlParts.length-1];
+                            var audioFilename = urlParts[urlParts.length-1].split('?')[0];
                             console.log('saving ' + audioFilename);
                             request
                                 .get(audioUrl)
