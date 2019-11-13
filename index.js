@@ -81,15 +81,17 @@ request({
                         }
 
                         results.forEach(function(audioUrl) {
-                            var urlParts = audioUrl.split('/');
-                            var audioFilename = urlParts[urlParts.length-1].split('?')[0];
-                            console.log('saving ' + audioFilename);
-                            request
-                                .get(audioUrl)
-                                .on('error', function(err) {
-                                    console.log('Error: ' + err);
-                                })
-                                .pipe(fs.createWriteStream(audioFilename, { defaultEncoding: 'binary' }));
+                            if (audioUrl != null) {
+                                var urlParts = audioUrl.split('/');
+                                var audioFilename = urlParts[urlParts.length-1].split('?')[0];
+                                console.log('saving ' + audioFilename);
+                                request
+                                    .get(audioUrl)
+                                    .on('error', function(err) {
+                                        console.log('Error: ' + err);
+                                    })
+                                    .pipe(fs.createWriteStream(audioFilename, { defaultEncoding: 'binary' }));
+                            }
                         });
                     }
                 );
